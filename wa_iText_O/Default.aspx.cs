@@ -31,14 +31,14 @@ namespace wa_iText_O
             var txt_empresa = new Text(text);
             //txt_empresa.SetFontColor(iText.Kernel.Colors.ColorConstants.BLUE);
             //txt_empresa.SetFont(PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA));
-            txt_empresa.SetFontSize(10);
+            txt_empresa.SetFontSize(8);
             var par_empresa = new Paragraph();
-            par_empresa.SetMultipliedLeading(1);
+            par_empresa.SetMultipliedLeading(0.5F);
             par_empresa.Add(txt_empresa);
             Cell celula_empresa = new Cell();
             celula_empresa.SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT);
             celula_empresa.Add(par_empresa);
-
+            celula_empresa.SetBorder(Border.NO_BORDER);
             return celula_empresa;
         }
         private Cell SetCeldaAlign(string text,iText.Layout.Properties.TextAlignment alignment)
@@ -46,14 +46,15 @@ namespace wa_iText_O
             var txt_empresa = new Text(text);
             //txt_empresa.SetFontColor(iText.Kernel.Colors.ColorConstants.BLUE);
             //txt_empresa.SetFont(PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA));
-            txt_empresa.SetFontSize(10);
+            txt_empresa.SetFontSize(8);
             var par_empresa = new Paragraph();
             par_empresa.SetMultipliedLeading(1);
             par_empresa.Add(txt_empresa);
             Cell celula_empresa = new Cell();
             celula_empresa.SetTextAlignment(alignment);
+            //celula_empresa.SetHeight(36f);
             celula_empresa.Add(par_empresa);
-
+            
             return celula_empresa;
         }
         private void CrearPDF()
@@ -84,84 +85,104 @@ namespace wa_iText_O
                     //TERMINA ENCABEZADO
 
 
-                    iText.Kernel.Colors.DeviceCmyk magentaColor = new iText.Kernel.Colors.DeviceCmyk(100F, 10F, 30F, 0F);
+                    iText.Kernel.Colors.DeviceCmyk magentaColor = new iText.Kernel.Colors.DeviceCmyk(63F, 0F, 97F, 0F);
 
-                    var table_bold = new iText.Layout.Element.Table(1);
-                    table_bold.SetWidth(525);
-                    // Adding row 1 to the table
-                    Cell c1 = new Cell();
-
-                    // Adding the contents of the cell
-                    c1.Add(new Paragraph("Name"));
-                    // Setting the back ground color of the cell
-                    c1.SetBorder(Border.NO_BORDER);
-                    // Setting the border of the cell
-                    c1.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.RED, 3));
-                    // Setting the text alignment       
-                    c1.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-
-                    table_bold.AddCell(c1);
-                    doc.Add(table_bold);
                     
+
+
                     var table_folio = new iText.Layout.Element.Table(2);
                     table_folio.SetWidth(525);
-                    
-
-                    //var cell = new Cell();
-                    //cell.Add(par_encabezado);
-                    //cell.SetBorder(Border.NO_BORDER);
-                    //cell.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.RED, 3));
-                    //table_folio.AddCell(cell);
-
+                   
                     Cell celda = SetCelda("");
-                    celda.SetBorder(Border.NO_BORDER);
+                    
                     table_folio.AddCell(celda);
-                    Cell celda_folio = SetCeldaAlign("Folio: " + pdfI.folio, iText.Layout.Properties.TextAlignment.RIGHT);
+                    Cell celda_folio = SetCeldaAlign("FOLIO: " + pdfI.folio, iText.Layout.Properties.TextAlignment.RIGHT);
                     celda_folio.SetBorder(Border.NO_BORDER);
-                    //celda_folio.SetBorderTop()etBorderWidthTop(2f);
                     table_folio.AddCell(celda_folio);
                     doc.Add(table_folio);
 
                     doc.Add(new Paragraph("\n"));
-                    //doc.Add(new Paragraph("\n"));
 
-                    var table = new iText.Layout.Element.Table(2);
+                    var table = new iText.Layout.Element.Table(new float[] { 40, 120, 30 });
+
                     table.SetWidth(525);
 
+                    Cell celula_empresa = SetCelda("EMPRESA: " + pdfI.Empresa);
+                    celula_empresa.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_empresa);
+
+                    table.AddCell(SetCelda(" "));
+
+                    Cell celula_caja = SetCelda("CAJA:" + pdfI.Punto_de_Venta);
+                    celula_caja.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_caja);
+
+                    Cell celula_rfc = SetCelda("RFC: " + pdfI.RFC);
+                    celula_rfc.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_rfc);
+
+                    table.AddCell(SetCelda(" "));
                     
-                    table.AddCell(SetCelda("Empresa: " + pdfI.Empresa));
+                    Cell celula_cajero = SetCelda("CAJERO:" + pdfI.Cajero);
+                    celula_cajero.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_cajero);
+
+                    Cell celula_cliente = SetCelda("CLIENTE: " + pdfI.Cliente);
+                    celula_cliente.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_cliente);
+
+                    table.AddCell(SetCelda(" "));
                     
-                    table.AddCell(SetCelda("Caja:" + pdfI.Punto_de_Venta));
+                    Cell celula_expedicion = SetCelda("FECHA DE EXPEDICION: " + pdfI.fechaExpedicion.Date.ToShortDateString());
+                    celula_expedicion.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_expedicion);
 
-                    table.AddCell(SetCelda("RFC: " + pdfI.RFC));
+                    Cell celula_fracc = SetCelda("FRACCIONAMIENTO: " + pdfI.Fraccionamiento);
+                    celula_fracc.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_fracc);
 
-                    table.AddCell(SetCelda("Cajero:" + pdfI.Cajero));
+                    table.AddCell(SetCelda(" "));
 
-                    table.AddCell(SetCelda("Cliente: " + pdfI.Cliente));
+                    Cell celula_pago = SetCelda("FECHA DE PAGO: " + pdfI.fechaPago.Date.ToShortDateString());
+                    celula_pago.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_pago);
 
-                    table.AddCell(SetCelda("Fecha de Expedición: " + pdfI.fechaExpedicion.Date.ToShortDateString()));
+                    Cell celula_apple = SetCelda("MANZANA Y LOTE: " + pdfI.ManzanaYLote);
+                    celula_apple.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_apple);
 
-                    table.AddCell(SetCelda("Fraccionamiento: " + pdfI.Fraccionamiento));
+                    table.AddCell(SetCelda(" "));
 
-                    table.AddCell(SetCelda("Fecha de Pago: " + pdfI.fechaPago.Date.ToShortDateString()));
+                    Cell celula_vence = SetCelda("FECHA DE VENCIMIENTO: " + pdfI.fechaVencimiento.Date.ToShortDateString());
+                    celula_vence.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_vence);
 
-                    table.AddCell(SetCelda("Manzana y Lote: " + pdfI.ManzanaYLote));
+                    Cell celula_ciudad = SetCelda("CIUDAD: " + pdfI.Municipio);
+                    celula_ciudad.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_ciudad);
 
-                    table.AddCell(SetCelda("Fecha de Vencimiento: " + pdfI.fechaVencimiento.Date.ToShortDateString()));
+                    table.AddCell(SetCelda(" "));
 
-                    table.AddCell(SetCelda("Ciudad: " + pdfI.Municipio));
-
-                    table.AddCell(SetCelda("Contrato: " + pdfI.identificador));
-                    //table.AddCell("hi");
+                    Cell celula_contrato = SetCelda("CONTRATO: " + pdfI.identificador);
+                    celula_contrato.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1));
+                    table.AddCell(celula_contrato);
 
                     doc.Add(table);
-                    //doc.Add();
+
                     doc.Add(new Paragraph("\n"));
-                    doc.Add(new Paragraph("\n"));
-                    doc.Add(new Paragraph("Fraccionamiento: " + pdfI.Fraccionamiento));
-                    doc.Add(new Paragraph("Empresa: " + pdfI.Empresa));
-                    doc.Add(new Paragraph("Manzana y Lote: " + pdfI.ManzanaYLote));
-                    doc.Add(new Paragraph("Ciudad: " + pdfI.Municipio));
+
+                    //INICIO LINEA
+                    var table_bold = new iText.Layout.Element.Table(1);
+                    table_bold.SetWidth(525);
+                    var c1 = new Cell();
+                    c1.Add(new Paragraph(" "));
+                    c1.SetBorder(Border.NO_BORDER);
+                    c1.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLUE, 4));//iText.Kernel.Colors.ColorConstants.RED, 3));
+                    c1.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                    table_bold.AddCell(c1);
+                    doc.Add(table_bold);
+                    //FIN LINEA
+
                 }
             }
         }
@@ -204,12 +225,7 @@ namespace wa_iText_O
 
             pdf.fechaPago = DateTime.Now;
             pdf.fechaVencimiento = DateTime.Now;
-
-            //}
-            //catch (Exception e)
-            //{
-            //    //Response.Write("<script>console.log('" + e.Message + "');</script>");
-            //}
+ 
             return pdf;
         }
         public class ReciboProvisionalToPDF_CR
