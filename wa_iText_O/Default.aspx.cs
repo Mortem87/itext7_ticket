@@ -79,6 +79,7 @@ namespace wa_iText_O
             txt_head.SetFontColor(iText.Kernel.Colors.ColorConstants.BLUE);
 
             var txt_desc = new Text(desc);
+            txt_desc.SetFont(bold);
             txt_desc.SetFontSize(8);
             txt_desc.SetFontColor(iText.Kernel.Colors.ColorConstants.RED);
 
@@ -104,9 +105,6 @@ namespace wa_iText_O
 
                     var doc = new Document(pdf);
                     //doc.Add(new Paragraph("Recibos Provisionales"));
-
-
-
                     
                     //INICIA ENCABEZADO
                     ReciboProvisionalToPDF_CR pdfI = ObtenerRecibo();
@@ -159,14 +157,51 @@ namespace wa_iText_O
                     doc.Add(new Paragraph("\n"));
 
                     //INICIO LINEA
-                    var table_bold = new iText.Layout.Element.Table(1);
+                    var table_bold = new iText.Layout.Element.Table(3);
                     table_bold.SetWidth(525);
+
                     var c1 = new Cell();
-                    c1.Add(new Paragraph(" "));
+                    c1.Add(new Paragraph("HOLA MUNDO"));
                     c1.SetBorder(Border.NO_BORDER);
-                    c1.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLUE, 4));//iText.Kernel.Colors.ColorConstants.RED, 3));
+                    c1.SetBorderTop(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLUE, 4));
                     c1.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
                     table_bold.AddCell(c1);
+
+                    var c2 = new Cell();
+                    c2.Add(new Paragraph("HOLA MUNDO"));
+                    c2.SetBorder(Border.NO_BORDER);
+                    c2.SetBorderTop (new SolidBorder(iText.Kernel.Colors.ColorConstants.BLUE, 4));
+                    c2.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                    table_bold.AddCell(c2);
+
+                    var c3 = new Cell();
+                    c3.Add(new Paragraph("HOLA MUNDO"));
+                    c3.SetBorder(Border.NO_BORDER);
+                    c3.SetBorderTop(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLUE, 4));
+                    c3.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                    table_bold.AddCell(c3);
+
+                    var c4 = new Cell();
+                    c4.Add(new Paragraph("HOLA MUNDO"));
+                    c4.SetBorder(Border.NO_BORDER);
+                    c4.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLUE, 4));
+                    c4.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                    table_bold.AddCell(c4);
+
+                    var c5 = new Cell();
+                    c5.Add(new Paragraph("HOLA MUNDO"));
+                    c5.SetBorder(Border.NO_BORDER);
+                    c5.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLUE, 4));
+                    c5.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                    table_bold.AddCell(c5);
+
+                    var c6= new Cell();
+                    c6.Add(new Paragraph("HOLA MUNDO"));
+                    c6.SetBorder(Border.NO_BORDER);
+                    c6.SetBorderBottom(new SolidBorder(iText.Kernel.Colors.ColorConstants.BLUE, 4));
+                    c6.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                    table_bold.AddCell(c6);
+
                     doc.Add(table_bold);
                     //FIN LINEA
 
